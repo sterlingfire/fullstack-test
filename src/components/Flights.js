@@ -43,11 +43,11 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Flights = props => {
-  
+
   const classes = useStyles()
 
   let agentChoices = Array.from(new Set(props.itineraries.map(itinerary => itinerary.agent)))
-  
+
   const [flightsState, setFlightsState] = useState({
     selected: props.itineraries,
     agent: 'all',
@@ -84,11 +84,12 @@ const Flights = props => {
   }
 
 
+  /* Using a grid layout is a good approach to the complex layout required here */
   return (
     <Grid
       container
       direction="column"
-      justify="center" 
+      justify="center"
       alignItems="center"
       className={classes.container}
     >
@@ -124,7 +125,7 @@ const Flights = props => {
           </Select>
           <FormHelperText className={classes.formText}>Filter by Flight Agent</FormHelperText>
         </FormControl>
-        <Button 
+        <Button
           variant="outlined"
           color="primary"
           className={classes.button}
@@ -143,7 +144,7 @@ const Flights = props => {
         {
           flightsState.selected.map(itinerary => {
             return (
-              <Itinerary 
+              <Itinerary
                 key={itinerary._id}
                 itinerary={itinerary}
                 legs={props.legs}

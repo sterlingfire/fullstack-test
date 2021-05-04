@@ -11,10 +11,14 @@ import DeleteIcon from '@material-ui/icons/Delete'
 
 import Time from './Time'
 
+
 const hours = mins => {
   return Math.floor(mins / 60).toString()
 }
-
+/* Good. Simple, readable way to return minutes
+Could be a ternary like below, but that might sacrifice readability.
+  minutes = min => (mins % 60 === 0) ? "00" : (mins % 60).toString();
+*/
 const minutes = mins => {
   if (mins % 60 === 0) {
     return '00'
@@ -22,7 +26,7 @@ const minutes = mins => {
     return (mins % 60).toString()
   }
 }
-
+/* Defining the styles for the page in one location is good. */
 const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: theme.spacing(2.5)
@@ -41,17 +45,17 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.success.main
   },
   error: {
-    color: theme.palette.error.main 
+    color: theme.palette.error.main
   },
   buttonGroup: {
     height: theme.spacing(2),
     marginRight: theme.spacing(1.5)
   },
 }))
-
+/* Breaking out Leg into it's own component is good for reusability and testability. */
 const Leg = (props) => {
   const classes = useStyles()
-  
+
   return (
     <Grid
       container
@@ -67,16 +71,16 @@ const Leg = (props) => {
         wrap="nowrap"
       >
         {/* Airline Logo */}
-        <img 
-          src={`https://logos.skyscnr.com/images/airlines/favicon/${props.leg.airlineId}.png`} 
+        <img
+          src={`https://logos.skyscnr.com/images/airlines/favicon/${props.leg.airlineId}.png`}
           alt="Airline Logo"
           className={classes.logo}
         />
-        
+
         {/* Departure */}
-        <Time 
-          info={{ 
-            airport: props.leg.departureAirport, 
+        <Time
+          info={{
+            airport: props.leg.departureAirport,
             time: props.leg.departureTime
           }}
         />
@@ -87,9 +91,9 @@ const Leg = (props) => {
         </div>
 
         {/* Arrival */}
-        <Time 
-          info={{ 
-            airport: props.leg.arrivalAirport, 
+        <Time
+          info={{
+            airport: props.leg.arrivalAirport,
             time: props.leg.arrivalTime
           }}
         />
@@ -98,16 +102,16 @@ const Leg = (props) => {
         container
         justify="center"
         alignItems="center"
-        direction="column" 
+        direction="column"
         className={classes.right}
       >
         {/* Flight Duration */}
         <Typography
-          color="secondary" 
+          color="secondary"
         >
           {`${hours(props.leg.durationMins)}h ${minutes(props.leg.durationMins)}`}
         </Typography>
-        
+
         {/* Potential Stops */}
         {
           props.leg.stops > 0 ? (
@@ -119,7 +123,7 @@ const Leg = (props) => {
               }
             </Typography>
           ) : (
-            <Typography 
+            <Typography
               className={classes.success}
             >
               Direct

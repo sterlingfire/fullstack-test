@@ -51,18 +51,19 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+/* Breaking out Itinerary into it's own component is good for reusability and testability. */
 const Itinerary = props => {
-  
+
   const classes = useStyles()
 
   return (
     <Card className={classes.root}>
-      <Grid 
+      <Grid
         item
         className={classes.section}
       >
         {/* Leg 1 */}
-        <Leg 
+        <Leg
           leg={props.legs.find(leg => leg._id === props.itinerary.legs[0])}
           access={props.access}
         />
@@ -73,7 +74,7 @@ const Itinerary = props => {
           access={props.access}
         />
       </Grid>
-      <Grid 
+      <Grid
         container
         justify="space-between"
         alignItems="center"
@@ -81,14 +82,14 @@ const Itinerary = props => {
         <Grid item>
           {/* Flight Price */}
           <Typography
-            color="primary" 
+            color="primary"
             className={classes.price}
           >
             &pound;{props.itinerary.price}
           </Typography>
 
           {/* Flight Agent and Rating */}
-          <Typography 
+          <Typography
             component="p"
             color="textPrimary"
             className={classes.agent}

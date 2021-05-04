@@ -32,8 +32,9 @@ const Header = () => {
   const classes = useStyles()
 
   return (
-    <Paper 
-      className={classes.header} 
+    /* The material UI paper component is a nice design element. I like it. */
+    <Paper
+      className={classes.header}
       elevation={3}
       square
     >
@@ -56,7 +57,7 @@ const Header = () => {
         </Link>
         <Link href="/itinerary">
           <a className={classes.link}>
-            Itinerary 
+            Itinerary
             <AddIcon fontSize="small"/>
           </a>
         </Link>

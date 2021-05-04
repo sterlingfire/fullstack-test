@@ -11,8 +11,10 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <ThemeProvider theme={theme}>
+        {/* ThemeProvider looks like a context provider for material UI themes */}
         <Layout>
           <CssBaseline />
+          {/* Using a Component for CSS baseline is interesting. I have used "CSS reset" css files, but not as a component before. */}
           <Component {...pageProps} />
         </Layout>
       </ThemeProvider>
@@ -21,4 +23,3 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp
-

@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(5)
   }
 }))
-
+/* Breaking out Time into it's own component is good for reusability and testability. */
 const Time = props => {
 
   const classes = useStyles()
@@ -17,18 +17,18 @@ const Time = props => {
     <Grid
       container
       direction="column"
-      justify="center" 
+      justify="center"
       className={classes.root}
     >
       <Typography
-        color="primary" 
+        color="primary"
         m={0}
       >
         {props.info.time.substr(props.info.time.length - 5)}
       </Typography>
       <Typography
         color="secondary"
-        m={0} 
+        m={0}
       >
         {props.info.airport}
       </Typography>

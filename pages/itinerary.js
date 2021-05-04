@@ -29,12 +29,12 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(4)
   },
   form: {
-    display: 'flex', 
+    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     width: '75%',
-    paddingBottom: theme.spacing(4) 
+    paddingBottom: theme.spacing(4)
   },
   section: {
     '& .MuiTextField-root': {
@@ -79,7 +79,7 @@ const NewItinerary = props => {
 
   const [formState, setFormState] = useState({
     legs: [],
-    price: 0, 
+    price: 0,
     agent: '',
     agentRating: 0
   })
@@ -91,9 +91,13 @@ const NewItinerary = props => {
   const [submitting, setSubmitting] = useState(false)
   const [errorState, setErrorState] = useState({})
   const router = useRouter()
-  
+
   const checkboxError = Object.keys(legKeys).filter((item) => checked[item]).length !== 2
 
+  /* useEffect hook for handling errors.
+   * Whenever error state changes, this is called again.
+   * Only adds itinerary when submitting with no errors.
+  */
   useEffect(() => {
     let numErrors = Object.keys(errorState).length
     if (submitting) {
@@ -105,6 +109,11 @@ const NewItinerary = props => {
     }
   }, [errorState])
 
+  /* Called by the useEffect hook above.
+   * Tries to Send POST request to /api/itineraries with the form data
+    to add new itinerary
+   * If it doesn't work: it console logs any errors.
+   */
   const addItinerary = async () => {
     try {
       const res = await fetch(`${props.path}/api/itineraries`, {
@@ -129,35 +138,37 @@ const NewItinerary = props => {
     setFormState({ ...formState, [event.target.name]: event.target.value })
   }
 
+  /* Basic form validation. */
   const validation = () => {
     let errors = {}
 
     if (!formState.legs || formState.legs.length !== 2) {
       errors.legs = checkboxError
     }
-    
+
     if (formState.price < 0 || formState.price === '') {
       errors.price = true
     }
     if (!formState.agent) {
       errors.agent = true
-    } 
-    
+    }
+
     if (!formState.agentRating ) {
       errors.agentRating = true
     }
-    
+
     return errors
   }
 
   const handleSubmit = event => {
     event.preventDefault()
-    
+
     const keys = Object.keys(checked)
     const legs = keys.filter(val => checked[val])
-    
+
     const price = parseInt(formState.price)
     const agentRating = props.agents.filter(agent => formState.agent === agent.name).map(agent => agent.rating)[0]
+    /* ^ using map applies the function to all array items, but then the code is grabbing index [0]. Could be refactored. */
     setFormState({ ...formState, legs, price, agentRating })
 
     const errors = validation()
@@ -165,7 +176,7 @@ const NewItinerary = props => {
 
     setSubmitting(true)
   }
-
+  /*  */
   return (
     <Grid
       container
@@ -188,7 +199,7 @@ const NewItinerary = props => {
                       <Leg key={leg._id} leg={leg} access={false} />
                     </CardContent>
                     <CardActions disableSpacing className={classes.cardActions}>
-                      <Checkbox 
+                      <Checkbox
                         onChange={handleChange}
                         name={`${leg._id}`}
                         checked={checked[leg._id]}
@@ -223,7 +234,7 @@ const NewItinerary = props => {
                 root: classes.outlined
               },
               className: classes.input,
-              startAdornment: <InputAdornment positiion="start" className={classes.input}>&pound;&nbsp;</InputAdornment> 
+              startAdornment: <InputAdornment positiion="start" className={classes.input}>&pound;&nbsp;</InputAdornment>
             }}
           />
           <FormControl variant="outlined" className={classes.select} error={errorState.agent}>

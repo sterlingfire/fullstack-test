@@ -1,4 +1,5 @@
 import styles from '../styles/Home.module.css'
+/* Why use CSS module here, when the rest of the app uses material UI styles? */
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 
@@ -19,11 +20,11 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Home = props => {
-  
+
   const classes = useStyles()
 
   return (
-    <Grid 
+    <Grid
       container
       direction="column"
       justify="center"
@@ -33,12 +34,12 @@ const Home = props => {
       <Grid
         container
         direction="column"
-        justify="center" 
+        justify="center"
         alignItems="center"
         className={classes.main}
       >
         {/* List of Itineraries */}
-        <Flights 
+        <Flights
           itineraries={props.itineraries}
           legs={props.legs}
         />
@@ -68,7 +69,7 @@ Home.getInitialProps = async ({ req }) => {
 
   const lg_res = await fetch(`${url}/api/legs`)
   const legs = await lg_res.json()
-  
+
   return { itineraries: itineraries.data, legs: legs.data, path: url }
 }
 
